@@ -16,6 +16,7 @@ function updateContainer(element, container) {
     type: containerInfo.nodeName.toLowerCase(),
     stateNode: containerInfo,
   });
+  // 组件初次渲染
   scheduleUpdateOnFiber(fiber);
 }
 
