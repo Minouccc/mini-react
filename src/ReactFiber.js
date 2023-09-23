@@ -1,5 +1,5 @@
 import { HostComponent } from "./ReactWorkTags";
-import { isFn, isStr } from "./utils";
+import { Placement, isFn, isStr } from "./utils";
 
 export function createFiber(vnode, returnFiber) {
   const fiber = {
