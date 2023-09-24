@@ -9,16 +9,30 @@ export function updateHostComponent(wip) {
   }
 
   reconcileChildren(wip, wip.props.children);
-  console.log(wip, "wip");
 }
 
-export function updateFunctionComponent() {}
+// 函数组件
+export function updateFunctionComponent(wip) {
+  const { type, props } = wip;
+  const children = type(props);
+  reconcileChildren(wip, children);
+}
 
-export function updateClassComponent() {}
+// 类组件
+export function updateClassComponent(wip) {
+  const { type, props } = wip;
+  const instance = new type(props);
+  const children = instance.render();
+  reconcileChildren(wip, children);
+}
 
-export function updateFragmentComponent() {}
+export function updateFragmentComponent(wip) {
+  reconcileChildren(wip, wip.props.children);
+}
 
-export function updateHostTextComponent() {}
+export function updateHostTextComponent(wip) {
+  wip.stateNode = document.createTextNode(wip.props.children);
+}
 
 // 协调（diff）
 function reconcileChildren(wip, children) {

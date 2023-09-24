@@ -55,7 +55,7 @@ function performUnitOfWork() {
   let next = wip;
 
   while (next) {
-    if (wip.sibling) {
+    if (next.sibling) {
       wip = next.sibling;
       return;
     }
@@ -89,7 +89,7 @@ function commitWorker(wip) {
   }
   // 1. 提交自己
   // parentNode 是父DOM节点
-  const parentNode = wip.return.stateNode;
+  const parentNode = getParentNode(wip.return); //wip.return.stateNode;
   const { flags, stateNode } = wip;
 
   if (flags & Placement && stateNode) {
@@ -100,4 +100,14 @@ function commitWorker(wip) {
 
   // 3. 提交兄弟
   commitWorker(wip.sibling);
+}
+
+function getParentNode(wip) {
+  let tem = wip;
+  while (tem) {
+    if (tem.stateNode) {
+      return tem.stateNode;
+    }
+    tem = tem.return;
+  }
 }
