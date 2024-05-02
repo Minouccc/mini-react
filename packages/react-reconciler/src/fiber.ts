@@ -4,21 +4,37 @@ import { Flags, NoFlags } from "./fiberFlags";
 import { Container } from "./hostConfig";
 
 export class FiberNode {
+  /** fiber 标签 证明是什么类型fiber */
   tag: WorkTag;
-  pendingProps: Props;
+  /** key调和子节点时候用到 */
   key: Key;
+  /** 指向对应的真实dom元素，类组件指向组件实例，可以被ref获取 */
   stateNode: any;
+  /** dom元素是对应的元素类型，比如div，组件指向组件对应的类或者函数 */
   type: any;
+  /** 指向父级fiber */
   return: FiberNode | null;
+  /** 指向兄弟fiber */
   sibling: FiberNode | null;
+  /** 指向子级fiber */
   child: FiberNode | null;
+  /** 索引 */
   index: number;
+  /** ref指向，ref函数，或者ref对象 */
   ref: Ref;
+  /** 在一次更新中，代表element创建 */
+  pendingProps: Props;
+  /** 记录上一次更新完毕后的props */
   memoizedProps: Props | null;
+  /** 类组件保存state信息，函数组件保存hooks信息，dom元素为null */
   memoizedState: any;
+  /** 双缓存树，指向缓存的fiber。更新阶段，两颗树互相交替 */
   alternate: FiberNode | null;
+  /** 副作用标识 */
   flags: Flags;
+  /** 子树中的副作用 */
   subtreeFlags: Flags;
+  /** 类组件存放setState更新队列，函数组件存放 */
   updateQueue: unknown;
 
   constructor(tag: WorkTag, pendingProps: Props, key: Key) {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 export type Container = any;
 
 export const createInstance = (..._args: any) => {
