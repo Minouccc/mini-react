@@ -27,24 +27,24 @@ export const createUpdate = <State>(action: Action<State>): Update<State> => {
 
 /**
  * 初始化updateQueue
- * @returns {UpdateQueue<Action>}
+ * @returns {UpdateQueue<State>}
  */
-export const createUpdateQueue = <Action>() => {
+export const createUpdateQueue = <State>() => {
   return {
     shared: {
       pending: null,
     },
-  } as UpdateQueue<Action>;
+  } as UpdateQueue<State>;
 };
 
 /**
  * 更新update
- * @param {UpdateQueue<Action>} updateQueue
- * @param {Update<Action>} update
+ * @param {UpdateQueue<State>} updateQueue
+ * @param {Update<State>} update
  */
-export const enqueueUpdate = <Action>(
-  updateQueue: UpdateQueue<Action>,
-  update: Update<Action>
+export const enqueueUpdate = <State>(
+  updateQueue: UpdateQueue<State>,
+  update: Update<State>
 ) => {
   updateQueue.shared.pending = update;
 };

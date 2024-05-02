@@ -5,15 +5,15 @@
  * 1. 如果有子节点，遍历子节点  2、 没有子节点就遍历兄弟节点
  * 2. 每一个fiber都是先beginWork 然后completeWork
  */
-import { FiberNode, FiberRootNode } from "./fiber";
+import { FiberNode, FiberRootNode, createWorkInProgress } from "./fiber";
 import { beginWork } from "./beginWork";
 import { completeWork } from "./completeWork";
 import { HostRoot } from "./workTags";
 
 let workInProgress: FiberNode | null = null;
 
-function prepareFreshStack(fiber: FiberNode) {
-  workInProgress = fiber;
+function prepareFreshStack(root: FiberRootNode) {
+  workInProgress = createWorkInProgress(root.current, {});
 }
 
 export function scheduleUpdateOnFiber(fiber: FiberNode) {
@@ -45,10 +45,18 @@ function renderRoot(root: FiberRootNode) {
       workLoop();
       break;
     } catch (e) {
-      console.warn("workLoop发生错误", e);
+      if (__DEV__) {
+        console.warn("workLoop发生错误", e);
+      }
       workInProgress = null;
     }
   } while (true);
+
+  const finishedWork = root.current.alternate;
+  root.finishedWork = finishedWork;
+
+  // wip fiberNode树  树中的flags执行对应的操作
+  // commitRoot(root)
 }
 
 function workLoop() {
