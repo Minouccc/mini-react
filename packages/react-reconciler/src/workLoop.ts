@@ -5,9 +5,10 @@
  * 1. 如果有子节点，遍历子节点  2、 没有子节点就遍历兄弟节点
  * 2. 每一个fiber都是先beginWork 然后completeWork
  */
-import { FiberNode } from "./fiber";
+import { FiberNode, FiberRootNode } from "./fiber";
 import { beginWork } from "./beginWork";
 import { completeWork } from "./completeWork";
+import { HostRoot } from "./workTags";
 
 let workInProgress: FiberNode | null = null;
 
@@ -15,8 +16,28 @@ function prepareFreshStack(fiber: FiberNode) {
   workInProgress = fiber;
 }
 
+export function scheduleUpdateOnFiber(fiber: FiberNode) {
+  // 调度功能
+  // 从当前触发更新的fiber向上遍历到根节点fiber
+  let root = markUpdateFromFiberToRoot(fiber);
+  renderRoot(root);
+}
+
+function markUpdateFromFiberToRoot(fiber: FiberNode) {
+  let node = fiber;
+  let parent = node.return;
+  while (parent !== null) {
+    node = parent;
+    parent = node.return;
+  }
+  if (node.tag === HostRoot) {
+    return node.stateNode;
+  }
+  return null;
+}
+
 // @ts-ignore
-function renderRoot(root: FiberNode) {
+function renderRoot(root: FiberRootNode) {
   // 初始化，将workInProgress 指向第一个fiberNode
   prepareFreshStack(root);
   do {
