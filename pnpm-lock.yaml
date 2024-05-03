@@ -18,6 +18,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^17.3.0
         version: 17.8.1
+      '@rollup/plugin-alias':
+        specifier: ^5.1.0
+        version: 5.1.0(rollup@4.17.2)
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
         version: 25.0.7(rollup@4.17.2)
@@ -55,8 +58,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(rollup@4.17.2)
       rollup-plugin-typescript2:
-        specifier: ^0.36.0
-        version: 0.36.0(rollup@4.17.2)(typescript@4.9.5)
+        specifier: ^0.34.1
+        version: 0.34.1(rollup@4.17.2)(typescript@4.9.5)
       typescript:
         specifier: ^4.9.4
         version: 4.9.5
@@ -65,6 +68,18 @@ importers:
     dependencies:
       shared:
         specifier: workspace:*
+        version: link:../shared
+
+  packages/react-dom:
+    dependencies:
+      react:
+        specifier: 'workspace: *'
+        version: link:../react
+      react-reconciler:
+        specifier: 'workspace: *'
+        version: link:../react-reconciler
+      shared:
+        specifier: 'workspace: *'
         version: link:../shared
 
   packages/react-reconciler:
@@ -220,6 +235,15 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@rollup/plugin-alias@5.1.0':
+    resolution: {integrity: sha512-lpA3RZ9PdIG7qqhEfv79tBffNaoDuukFDrmhLqg9ifv99u/ehn+lOg30x2zmhf8AQqQUZaMk/B9fZraQ6/acDQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
 
   '@rollup/plugin-commonjs@25.0.7':
     resolution: {integrity: sha512-nEvcR+LRjEjsaSsc4x3XZfCCvZIaSMenZu/OiwOKGN2UhQpAYI7ru7czFvyWbErlpoGjnSX3D5Ch5FcMA3kRWQ==}
@@ -1276,8 +1300,8 @@ packages:
     peerDependencies:
       rollup: '>=1.0.0'
 
-  rollup-plugin-typescript2@0.36.0:
-    resolution: {integrity: sha512-NB2CSQDxSe9+Oe2ahZbf+B4bh7pHwjV5L+RSYpCu7Q5ROuN94F9b6ioWwKfz3ueL3KTtmX4o2MUH2cgHDIEUsw==}
+  rollup-plugin-typescript2@0.34.1:
+    resolution: {integrity: sha512-P4cHLtGikESmqi1CA+tdMDUv8WbQV48mzPYt77TSTOPJpERyZ9TXdDgjSDix8Fkqce6soYz3+fa4lrC93IEkcw==}
     peerDependencies:
       rollup: '>=1.26.3'
       typescript: '>=2.4.0'
@@ -1329,6 +1353,10 @@ packages:
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
+
+  slash@4.0.0:
+    resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
+    engines: {node: '>=12'}
 
   sort-keys@2.0.0:
     resolution: {integrity: sha512-/dPCrG1s3ePpWm6yBbxZq5Be1dXGLyLn9Z791chDC3NFrpkVbWGzkBwPN1knaciexFXgRJ7hzdnwZ4stHSDmjg==}
@@ -1742,6 +1770,12 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@rollup/plugin-alias@5.1.0(rollup@4.17.2)':
+    dependencies:
+      slash: 4.0.0
+    optionalDependencies:
+      rollup: 4.17.2
 
   '@rollup/plugin-commonjs@25.0.7(rollup@4.17.2)':
     dependencies:
@@ -2760,7 +2794,7 @@ snapshots:
       rollup: 4.17.2
       write-pkg: 4.0.0
 
-  rollup-plugin-typescript2@0.36.0(rollup@4.17.2)(typescript@4.9.5):
+  rollup-plugin-typescript2@0.34.1(rollup@4.17.2)(typescript@4.9.5):
     dependencies:
       '@rollup/pluginutils': 4.2.1
       find-cache-dir: 3.3.2
@@ -2821,6 +2855,8 @@ snapshots:
   signal-exit@4.1.0: {}
 
   slash@3.0.0: {}
+
+  slash@4.0.0: {}
 
   sort-keys@2.0.0:
     dependencies:
